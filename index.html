@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MateEasy Calculator </title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header> <!--This is header Section -->
+        <div class="logo">
+            <img src="images/MateEasy0.png" alt="logo">
+        </div>
+        <button id="login_button">Login</button>
+        <button id="signup_button">SignUp</button>
+    </header>
+    <main>
+        <h1>Effortless Calculations Made Simple </h1>
+        <!--Here where all Sections are included -->
+        <section id='calculator'> <!--CALCULATOR-->
+            <h2>Calculator</h2>
+            <input type="text" id='calc_display' readonly>
+            <div class="calc-container">
+
+                <button onclick="appendToCalc('9')">9</button>
+                <button onclick="appendToCalc('8')">8</button>
+                <button onclick="appendToCalc('7')">7</button>
+                <button onclick="appendToCalc('+')">+</button>
+
+                <button onclick="appendToCalc('6')">6</button>
+                <button onclick="appendToCalc('5')">5</button>
+                <button onclick="appendToCalc('4')">4</button>
+                <button onclick="appendToCalc('-')">-</button>
+
+                <button onclick="appendToCalc('3')">3</button>
+                <button onclick="appendToCalc('2')">2</button>
+                <button onclick="appendToCalc('1')">1</button>
+                <button onclick="appendToCalc('*')">*</button>
+
+                <button onclick="appendToCalc('0')">0</button>
+                <button onclick="appendToCalc('.')">.</button>
+                <button onclick="calculateResult()">=</button>
+                <button onclick="appendToCalc('/')">/</button>
+
+                <button class="calc_clear" onclick="clearCalc()">C</button>
+            </div>
+
+        </section>
+        <section id='multiplication_tables'> <!--TABLES-->
+            <h2>Multiplication_Tables</h2>
+            <input type="number" id="input_table" placeholder="Enter Number">
+            <button onclick="generate_table()">Generate Table</button>
+            <div id="table_result"></div>
+        </section>
+
+        <section id='root'> <!--ROOTS-->
+            <h2>Square and Cube Root</h2>
+            <input type="number" id='root_input' placeholder="Enter Number">
+            <button onclick="calculateSqrt()">Calculate Roots</button>
+            <div id="root_result"></div>
+        </section>
+    </main>
+    <!--Login Model -->
+    <div id="login_modal" class="modal">
+        <div class="modal_content">
+            <span class="close" onclick="closeLoginModal()">&times;
+            </span>
+            <h2>Login</h2>
+            <form id="login_form">
+                <label for="username">Username:</label>
+                <input type="text" id="login_username" name="username" required>
+                <label for="password">Password:</label>
+                <input type="password" id="login_password" name="password" required>
+                <br>
+                <button type="submit">Login</button>
+                <button type="button" id="OpenSignUp_form">New User ? SignUp </button>
+            </form>
+            <div id="login_message"></div>
+        </div>
+    </div>
+
+    <!--SignUp Model -->
+    <div id="signup_model" class="modal">
+        <div class="modal_content">
+            <span class="close" onclick="closeSingnUpModal()">&times;
+            </span>
+            <h2>SignUp</h2>
+            <form id="SignUp_form">
+                <label for="username">Username:</label>
+                <input type="text" id="signup_username" name="username" required>
+                <label for="password">Password:</label>
+                <input type="password" id="signup_password" name="password" required>
+                <label for="conf_password">Confirm Password:</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+                <br>
+                <button type="submit">SignUp</button>
+                <button type="button" id="OpenLogin_form">Existing User ? Login </button>
+            </form>
+            <div id="SignUp_message"></div>
+        </div>
+    </div>
+
+    <section>
+        <div class="other_calc">
+            <h2>Other Calculator</h2>
+            <div class="calc-links">
+                <a href="#" onclick="showCalculator('age')">Age Calculator</a>
+                <a href="#" onclick="showCalculator('geometry')">Geometry Calculator</a>
+                <a href="#" onclick="showCalculator('percentage')">Percentage Calculator</a>
+                <a href="#" onclick="showCalculator('travel-calc')">Travel Calculator</a>
+            </div>
+            <div id="calculators">
+                <div id="age" class="calculator">
+                    <h3>Age Calculator</h3>
+                    <form id="age-calculatorForm">
+                        <label for="birth-date">Select Birthdate: </label>
+                        <input type="date" id="birth-date" name="birth-date">
+                        <label for="current-date">Select Current Date: </label>
+                        <input type="date" id="current-date" name="current-date">
+                        <button type="button" onclick="calculateAge()">Calculate Age</button>
+                    </form>
+                    <div id="age-result"></div>
+                </div>
+                <div id="calculators">
+                    <div id="geometry" class="calculator">
+                        <h3>Geometry Calculator</h3>
+                        <!--Dropdown for Shape-->
+                        <label for="shape">Select Shape: </label>
+                        <select id="shape" onchange="updateForm()">
+                            <option value="polygon">Polygon</option>
+                            <option value="circle">Circle</option>
+                            <option value="triangle">Triangle</option>
+                            <option value="square">Square</option>
+                            <option value="rectangle">Rectangle</option>
+                        </select>
+                        <!--Specific Forms-->
+                        <div id="form-container">
+                            <!--Rectangle Form-->
+                            <div id="rectangle-form" class="shape-form">
+                                <h4>Rectangle</h4>
+                                <label for="rect-length">Length:</label>
+                                <input type="number" id="rect-length" placeholder="Enter length">
+                                <label for="rect-width">Breadth:</label>
+                                <input type="number" id="rect-width" placeholder="Enter breadth">
+                                <button onclick="calculateRectangle()">Calculate</button>
+                                <p id="rect-area">Area: </p>
+                                <p id="rect-perimeter">Perimeter: </p>
+                            </div>
+                            <!-- Circle Form -->
+                            <div id="circle-form" class="shape-form">
+                                <h4>Circle</h4>
+                                <label for="circle-radius">Radius:</label>
+                                <input type="number" id="circle-radius" placeholder="Enter radius">
+                                <button onclick="calculateCircle()">Calculate</button>
+                                <p id="circle-area">Area: </p>
+                                <p id="circle-circumference">Circumference: </p>
+                            </div>
+
+                            <!-- Square Form -->
+                            <div id="square-form" class="shape-form">
+                                <h4>Square</h4>
+                                <label for="square-side">Side:</label>
+                                <input type="number" id="square-side" placeholder="Enter side length">
+                                <button onclick="calculateSquare()">Calculate</button>
+                                <p id="square-area">Area: </p>
+                                <p id="square-perimeter">Perimeter: </p>
+                            </div>
+                            <!-- Triangle Form -->
+                            <div id="triangle-form" class="shape-form">
+                                <h4>Triangle</h4>
+                                <label for="tri-base">Base:</label>
+                                <input type="number" id="tri-base" placeholder="Enter base length">
+                                <label for="tri-height">Height:</label>
+                                <input type="number" id="tri-height" placeholder="Enter height">
+                                <label for="tri-side1">Side 1:</label>
+                                <input type="number" id="tri-side1" placeholder="Enter side 1 length">
+                                <label for="tri-side2">Side 2:</label>
+                                <input type="number" id="tri-side2" placeholder="Enter side 2 length">
+                                <label for="tri-side3">Side 3:</label>
+                                <input type="number" id="tri-side3" placeholder="Enter side 3 length">
+                                <button onclick="calculateTriangle()">Calculate</button>
+                                <p id="triangle-area">Area: </p>
+                                <p id="triangle-perimeter">Perimeter: </p>
+                            </div>
+                            <!-- Polygon Form -->
+                            <div id="polygon-form" class="shape-form">
+                                <h4>Polygon</h4>
+                                <label for="polygon-sides">Number of Sides:</label>
+                                <input type="number" id="polygon-sides" placeholder="Enter number of sides">
+                                <label for="polygon-side">Length of One Side:</label>
+                                <input type="number" id="polygon-side" placeholder="Enter side length">
+                                <button onclick="calculatePolygon()">Calculate</button>
+                                <p id="polygon-area">Area: </p>
+                                <p id="polygon-perimeter">Perimeter: </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="calculators">
+                        <div id="percentage" class="calculator">
+                            <h3>Percentage Calculator</h3>
+                            <form id="percent-calculatorForm">
+                                <label for="obtained-marks">Obtained Marks: </label>
+                                <input type="number" id="obtained-marks" required>
+                                <label for="total-marks">Total Marks: </label>
+                                <input type="number" id="total-marks" required>
+                                <button type="button" onclick="calculatePercentage()">Calculate Percentage</button>
+                            </form>
+                            <div id="Percentage-result"></div>
+                            
+                        </div>
+                    </div>
+                        <div id="calculators">
+                            <div id="travel-calc" class="calculator">
+                                <h3>Travel Calculator</h3>
+                                <form id="sd-calulator-form">
+                                    <div class="form-group">
+                                        <label for="speed">Speed: </label>
+                                        <!--<div class="input-container">-->
+                                        <input type="number" id="speed" placeholder="Speed (e.g., 60)" />
+                                        <span id="speed-unit">Km/h</span>
+                                        <!--</div>-->
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="distance">Distance: </label>
+                                        <input type="number" id="distance" placeholder="Distance (e.g., 100)" />
+                                        <span id="distance-unit">Km</span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="time">Time:</label>
+                                        <input type="number" id="time" placeholder="Time (e.g., 2)" />
+                                        <span id="time-unit">hours</span>
+                                    </div>
+                                    <div>
+                                        <button type="button" onclick="calculateSpeedDistanceTime()">Calculate</button>
+                                    </div>
+
+                                    <div id="sd-results">
+                                        <p id="result-speed">Speed: </p>
+                                        <p id="result-distance">Distance: </p>
+                                        <p id="result-time">Time: </p>
+
+                                    </div>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+    </section>
+    <footer>
+        <p>&copy; 2024 Tejal Vinod Apraj</p>
+    </footer>
+    <script src="script.js"></script>
+
+</body>
+
+</html>
